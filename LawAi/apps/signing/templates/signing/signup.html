@@ -1,0 +1,234 @@
+{% comment %} <!DOCTYPE html>
+<html>
+<head>
+    <title>LawAI Signup</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            background:#f5f5f5;
+        }
+
+        .container{
+            width:350px;
+            margin:100px auto;
+            background:white;
+            padding:30px;
+            border-radius:8px;
+            box-shadow:0 0 10px rgba(0,0,0,0.1);
+        }
+
+        input,select{
+            width:100%;
+            padding:10px;
+            margin:10px 0;
+        }
+
+        button{
+            width:100%;
+            padding:10px;
+            background:black;
+            color:white;
+            border:none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>LawAI Signup</h2>
+
+<form method="POST">
+
+    {% csrf_token %}
+
+    <input type="text" name="name" placeholder="Name">
+
+    <input type="email" name="email" placeholder="Email">
+
+    <input type="password" name="password" placeholder="Password">
+
+    <select name="role">
+        <option value="User">Individual</option>
+        <option value="lawyer">Lawyer</option>
+    </select>
+
+    <button type="submit">Sign Up</button>
+
+</form>
+<p style="text-align:center;margin-top:10px;">
+Already have an account?
+<a href="/api/signing/login/">Login</a>
+</p>
+
+</div>
+
+</body>
+</html> {% endcomment %}
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>LawAI Signup</title>
+
+<style>
+
+*{
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#f3f3f3;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+margin:0;
+}
+
+.wrapper{
+width:900px;
+background:#fff;
+border-radius:20px;
+padding:40px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+.left{
+width:45%;
+text-align:center;
+}
+
+.left img{
+width:220px;
+}
+
+.right{
+width:45%;
+}
+
+.card{
+background:#fafafa;
+padding:30px;
+border-radius:15px;
+box-shadow:0 5px 15px rgba(0,0,0,0.05);
+}
+
+h2{
+margin-bottom:10px;
+}
+
+p{
+color:#777;
+margin-bottom:20px;
+}
+
+input, select{
+width:100%;
+padding:12px;
+margin:10px 0;
+border-radius:8px;
+border:1px solid #ddd;
+font-size:14px;
+}
+
+button{
+width:100%;
+padding:12px;
+background:#f06d2f;
+color:white;
+border:none;
+border-radius:8px;
+font-size:16px;
+cursor:pointer;
+margin-top:10px;
+}
+
+button:hover{
+background:#d95f28;
+}
+
+.google{
+background:white;
+border:1px solid #ddd;
+color:#444;
+margin-top:10px;
+}
+
+.link{
+text-align:center;
+margin-top:15px;
+font-size:14px;
+}
+
+.link a{
+color:#f06d2f;
+text-decoration:none;
+}
+
+.logo{
+font-size:22px;
+font-weight:bold;
+margin-bottom:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="wrapper">
+
+<div class="left">
+
+<div class="logo">LawAI</div>
+
+<img src="https://cdn-icons-png.flaticon.com/512/4712/4712109.png">
+
+</div>
+
+<div class="right">
+
+<div class="card">
+
+<h2>Lets Start Learning</h2>
+<p>Please signup to continue</p>
+
+<form method="POST">
+
+{% csrf_token %}
+
+<input type="text" name="name" placeholder="Your Name">
+
+<input type="email" name="email" placeholder="Your Email">
+
+<input type="password" name="password" placeholder="Your Password">
+
+<button type="submit">Sign Up</button>
+
+</form>
+
+<div class="link">
+Already have an account? 
+<a href="/api/signing/login/">Login</a>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
