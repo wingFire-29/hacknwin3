@@ -1,6 +1,8 @@
 from django.http import JsonResponse
 from .models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render
+
+from django.shortcuts import redirect
 
 
 def signup(request):
@@ -18,6 +20,9 @@ def signup(request):
             password=password,
             role=role
         )
+        
+        request.session['user_id'] = user.id
+        request.session['role'] = user.role
 
         # Redirect based on role
         if role == "lawyer":
@@ -39,6 +44,10 @@ def login_view(request):
 
         try:
             user = User.objects.get(email=email, password=password)
+            
+            
+            request.session['user_id'] = user.id
+            request.session['role'] = user.role
 
             # Redirect based on role
             if user.role == "lawyer":
@@ -52,3 +61,9 @@ def login_view(request):
             })
 
     return render(request, "signing/login.html")
+
+
+
+def logout_view(request):
+    request.session.flush()   
+    return redirect("/api/signing/login/")

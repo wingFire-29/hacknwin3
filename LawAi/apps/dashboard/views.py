@@ -1,8 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
+
 
 def lawyer_dashboard(request):
-    return render(request,"dashboard/lawyer_dashboard.html")
 
+    if 'user_id' not in request.session:
+        return redirect("/api/signing/login/")
 
-def user_dashboard(request):
-    return render(request,"dashboard/user_dashboard.html")
+    return render(request,"dashboard/lawyer_dashboard.html",{"role":"lawyer"})

@@ -24,13 +24,13 @@ height:100vh;
 .sidebar{
 width:240px;
 background:#151515;
-padding:20px;
+padding:25px;
 display:flex;
 flex-direction:column;
 }
 
 .logo{
-font-size:20px;
+font-size:22px;
 font-weight:bold;
 margin-bottom:30px;
 }
@@ -38,7 +38,7 @@ margin-bottom:30px;
 .menu a{
 display:block;
 padding:12px;
-margin-bottom:8px;
+margin-bottom:10px;
 color:#aaa;
 text-decoration:none;
 border-radius:8px;
@@ -47,6 +47,13 @@ border-radius:8px;
 .menu a:hover{
 background:#ff6a00;
 color:white;
+}
+
+.logout{
+margin-top:auto;
+background:#ff6a00;
+text-align:center;
+color:white !important;
 }
 
 /* MAIN */
@@ -62,13 +69,13 @@ padding:30px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-margin-bottom:30px;
+margin-bottom:25px;
 }
 
 .upgrade{
 background:#ff6a00;
 border:none;
-padding:10px 18px;
+padding:10px 20px;
 border-radius:20px;
 color:white;
 cursor:pointer;
@@ -78,14 +85,10 @@ cursor:pointer;
 
 .hero{
 background:#1a1a1a;
-border-radius:20px;
 padding:40px;
+border-radius:20px;
 text-align:center;
 margin-bottom:30px;
-}
-
-.hero h1{
-margin-top:20px;
 }
 
 .circle{
@@ -94,9 +97,10 @@ height:120px;
 margin:auto;
 border-radius:50%;
 background:radial-gradient(circle,#ff7b2c,#552200);
+margin-bottom:20px;
 }
 
-/* CARDS */
+/* GRID */
 
 .grid{
 display:grid;
@@ -112,8 +116,8 @@ transition:0.3s;
 }
 
 .card:hover{
-transform:translateY(-5px);
 background:#222;
+transform:translateY(-5px);
 }
 
 .card h3{
@@ -140,72 +144,80 @@ font-size:14px;
 <div class="menu">
 
 <a href="#">Chat With AI</a>
-<a href="#">Folders</a>
 <a href="#">Documents</a>
-<a href="#">Templates</a>
 <a href="#">History</a>
 
-</div>
+{% if role == "lawyer" %}
+<a href="#">Clients</a>
+<a href="#">Cases</a>
+{% endif %}
+
+<a href="/api/signing/logout/" class="logout">Logout</a>
 
 </div>
 
-<!-- MAIN -->
+</div>
+
+<!-- MAIN CONTENT -->
 
 <div class="main">
 
 <div class="topbar">
 
-<h2>Chat With LawAI</h2>
+<h2>Welcome to LawAI</h2>
 
 <button class="upgrade">Upgrade</button>
 
 </div>
 
-<!-- HERO -->
-
 <div class="hero">
 
 <div class="circle"></div>
 
-<h1>Welcome to LawAI</h1>
-
-<p>Start chatting with your AI legal assistant</p>
+<h1>AI Legal Assistant</h1>
+<p>Ask legal questions and manage your legal workflow.</p>
 
 </div>
 
-<!-- FEATURE CARDS -->
-
 <div class="grid">
+
+<!-- USER FEATURES -->
 
 <div class="card">
 <h3>AI Chatbot</h3>
-<p>Ask legal questions and get instant answers.</p>
+<p>Ask legal questions instantly.</p>
 </div>
 
 <div class="card">
 <h3>Legal Research</h3>
-<p>Search laws and case summaries quickly.</p>
+<p>Search legal documents and summaries.</p>
 </div>
 
 <div class="card">
 <h3>Generate Article</h3>
-<p>Create legal documents and drafts.</p>
+<p>Create legal drafts automatically.</p>
+</div>
+
+<!-- LAWYER FEATURES -->
+
+{% if role == "lawyer" %}
+
+<div class="card">
+<h3>Client Manager</h3>
+<p>Manage your legal clients.</p>
 </div>
 
 <div class="card">
 <h3>Case Analytics</h3>
-<p>Analyze legal cases and trends.</p>
+<p>Analyze case data with AI.</p>
 </div>
 
 <div class="card">
 <h3>Lawyer Tools</h3>
-<p>Manage clients and legal files.</p>
+<p>Professional law firm tools.</p>
 </div>
 
-<div class="card">
-<h3>Dev Mode</h3>
-<p>Advanced legal automation tools.</p>
-</div>
+{% endif %}
 
 </div>
 
