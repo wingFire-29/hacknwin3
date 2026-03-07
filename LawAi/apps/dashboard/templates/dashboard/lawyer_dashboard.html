@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>LawAI Dashboard</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+background:#0f0f0f;
+color:white;
+display:flex;
+height:100vh;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:240px;
+background:#151515;
+padding:20px;
+display:flex;
+flex-direction:column;
+}
+
+.logo{
+font-size:20px;
+font-weight:bold;
+margin-bottom:30px;
+}
+
+.menu a{
+display:block;
+padding:12px;
+margin-bottom:8px;
+color:#aaa;
+text-decoration:none;
+border-radius:8px;
+}
+
+.menu a:hover{
+background:#ff6a00;
+color:white;
+}
+
+/* MAIN */
+
+.main{
+flex:1;
+padding:30px;
+}
+
+/* TOPBAR */
+
+.topbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+}
+
+.upgrade{
+background:#ff6a00;
+border:none;
+padding:10px 18px;
+border-radius:20px;
+color:white;
+cursor:pointer;
+}
+
+/* HERO */
+
+.hero{
+background:#1a1a1a;
+border-radius:20px;
+padding:40px;
+text-align:center;
+margin-bottom:30px;
+}
+
+.hero h1{
+margin-top:20px;
+}
+
+.circle{
+width:120px;
+height:120px;
+margin:auto;
+border-radius:50%;
+background:radial-gradient(circle,#ff7b2c,#552200);
+}
+
+/* CARDS */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:20px;
+}
+
+.card{
+background:#1a1a1a;
+padding:25px;
+border-radius:12px;
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
+background:#222;
+}
+
+.card h3{
+margin-bottom:10px;
+}
+
+.card p{
+color:#999;
+font-size:14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- SIDEBAR -->
+
+<div class="sidebar">
+
+<div class="logo">LawAI</div>
+
+<div class="menu">
+
+<a href="#">Chat With AI</a>
+<a href="#">Folders</a>
+<a href="#">Documents</a>
+<a href="#">Templates</a>
+<a href="#">History</a>
+
+</div>
+
+</div>
+
+<!-- MAIN -->
+
+<div class="main">
+
+<div class="topbar">
+
+<h2>Chat With LawAI</h2>
+
+<button class="upgrade">Upgrade</button>
+
+</div>
+
+<!-- HERO -->
+
+<div class="hero">
+
+<div class="circle"></div>
+
+<h1>Welcome to LawAI</h1>
+
+<p>Start chatting with your AI legal assistant</p>
+
+</div>
+
+<!-- FEATURE CARDS -->
+
+<div class="grid">
+
+<div class="card">
+<h3>AI Chatbot</h3>
+<p>Ask legal questions and get instant answers.</p>
+</div>
+
+<div class="card">
+<h3>Legal Research</h3>
+<p>Search laws and case summaries quickly.</p>
+</div>
+
+<div class="card">
+<h3>Generate Article</h3>
+<p>Create legal documents and drafts.</p>
+</div>
+
+<div class="card">
+<h3>Case Analytics</h3>
+<p>Analyze legal cases and trends.</p>
+</div>
+
+<div class="card">
+<h3>Lawyer Tools</h3>
+<p>Manage clients and legal files.</p>
+</div>
+
+<div class="card">
+<h3>Dev Mode</h3>
+<p>Advanced legal automation tools.</p>
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
