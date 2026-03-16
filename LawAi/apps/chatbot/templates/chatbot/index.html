@@ -1,0 +1,548 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}LawAi - Legal AI Assistant{% endblock %}
+
+{% block extra_styles %}
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+
+    /* Header Styles */
+    .header {
+        background: white;
+        padding: 15px 30px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        border-bottom: 2px solid #f0f0f0;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .logo-icon {
+        width: 32px;
+        height: 32px;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+    }
+
+    .account-btn {
+        padding: 8px 20px;
+        border: none;
+        background: #f0f0f0;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: all 0.3s ease;
+    }
+
+    .account-btn:hover {
+        background: #667eea;
+        color: white;
+    }
+
+    /* Main Chat Container */
+    .chat-container {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 40px 20px;
+        overflow-y: auto;
+    }
+
+    .chat-box {
+        width: 100%;
+        max-width: 800px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        display: flex;
+        flex-direction: column;
+        height: 600px;
+    }
+
+    /* Messages Area */
+    .messages-area {
+        flex: 1;
+        overflow-y: auto;
+        padding: 30px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .greeting-section {
+        text-align: center;
+        margin-bottom: 30px;
+        animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .avatar {
+        width: 70px;
+        height: 70px;
+        background: #e0e0e0;
+        border-radius: 50%;
+        margin: 0 auto 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+    }
+
+    .greeting-title {
+        font-size: 28px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+    }
+
+    .greeting-subtitle {
+        font-size: 18px;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 8px;
+    }
+
+    .greeting-desc {
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 25px;
+    }
+
+    /* Quick Actions */
+    .quick-actions {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    .quick-action-btn {
+        padding: 10px 16px;
+        border: 1px solid #e0e0e0;
+        background: #f9f9f9;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 13px;
+        transition: all 0.3s ease;
+        white-space: nowrap;
+        font-weight: 500;
+    }
+
+    .quick-action-btn:hover {
+        background: #667eea;
+        color: white;
+        border-color: #667eea;
+        transform: translateY(-2px);
+    }
+
+    /* Chat Messages */
+    .message {
+        margin-bottom: 15px;
+        animation: slideIn 0.3s ease;
+    }
+
+    @keyframes slideIn {
+        from {
+            opacity: 0;
+            transform: translateX(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    .message.user {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .message.bot {
+        display: flex;
+        justify-content: flex-start;
+    }
+
+    .message-content {
+        max-width: 70%;
+        padding: 12px 16px;
+        border-radius: 12px;
+        font-size: 14px;
+        line-height: 1.5;
+        word-wrap: break-word;
+    }
+
+    .message.user .message-content {
+        background: #667eea;
+        color: white;
+        border-bottom-right-radius: 4px;
+    }
+
+    .message.bot .message-content {
+        background: #f0f0f0;
+        color: #333;
+        border-bottom-left-radius: 4px;
+    }
+
+    /* Input Area */
+    .input-area {
+        padding: 20px;
+        border-top: 1px solid #e0e0e0;
+        display: flex;
+        gap: 10px;
+    }
+
+    .input-wrapper {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        background: #f9f9f9;
+        border: 2px solid #e0e0e0;
+        border-radius: 25px;
+        padding: 0 16px;
+        transition: all 0.3s ease;
+    }
+
+    .input-wrapper:focus-within {
+        border-color: #667eea;
+        background: white;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    }
+
+    #messageInput {
+        flex: 1;
+        border: none;
+        background: transparent;
+        outline: none;
+        font-size: 14px;
+        padding: 10px 0;
+    }
+
+    .send-btn {
+        width: 40px;
+        height: 40px;
+        border: none;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border-radius: 50%;
+        cursor: pointer;
+        font-size: 18px;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .send-btn:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+
+    .send-btn:active {
+        transform: scale(0.95);
+    }
+
+    .send-btn.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    /* Loading Indicator */
+    .typing-indicator {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 12px 16px;
+        background: #f0f0f0;
+        border-radius: 12px;
+        width: fit-content;
+    }
+
+    .typing-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #999;
+        animation: typing 1.4s infinite;
+    }
+
+    .typing-dot:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .typing-dot:nth-child(3) {
+        animation-delay: 0.4s;
+    }
+
+    @keyframes typing {
+        0%, 60%, 100% {
+            opacity: 0.5;
+            transform: translateY(0);
+        }
+        30% {
+            opacity: 1;
+            transform: translateY(-10px);
+        }
+    }
+
+    /* Scrollbar Styling */
+    .messages-area::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    .messages-area::-webkit-scrollbar-track {
+        background: #f1f1f1;
+        border-radius: 10px;
+    }
+
+    .messages-area::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 10px;
+    }
+
+    .messages-area::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .chat-box {
+            height: 500px;
+        }
+
+        .greeting-title {
+            font-size: 22px;
+        }
+
+        .greeting-subtitle {
+            font-size: 16px;
+        }
+
+        .message-content {
+            max-width: 85%;
+        }
+
+        .quick-action-btn {
+            font-size: 12px;
+            padding: 8px 12px;
+        }
+
+        .quick-actions {
+            flex-direction: column;
+        }
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon">⚖️</div>
+            <span>LawAi</span>
+        </div>
+        <button class="account-btn" onclick="alert('Account feature coming soon!')">Account</button>
+    </div>
+
+    <!-- Chat Container -->
+    <div class="chat-container">
+        <div class="chat-box">
+            <!-- Messages Area -->
+            <div class="messages-area" id="messagesArea">
+                <div class="greeting-section">
+                    <div class="avatar">👤</div>
+                    <div class="greeting-title">Good evening,</div>
+                    <div class="greeting-subtitle">How can LawAi help you today?</div>
+                    <div class="greeting-desc">Ask about IPC sections, legal procedures, contracts, or rights.</div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="quick-actions">
+                    <button class="quick-action-btn" onclick="sendQuickMessage('Explain IPC section in simple terms')">
+                        📚 Explain IPC section
+                    </button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('How do I draft a legal notice?')">
+                        📄 Draft a legal notice
+                    </button>
+                    <button class="quick-action-btn" onclick="sendQuickMessage('Summarize a legal document')">
+                        📋 Summarize a document
+                    </button>
+                </div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-area">
+                <div class="input-wrapper">
+                    <input 
+                        type="text" 
+                        id="messageInput" 
+                        placeholder="Ask me anything about law..."
+                        onkeypress="handleKeyPress(event)"
+                        autocomplete="off"
+                    >
+                </div>
+                <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                    ➤
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const messagesArea = document.getElementById('messagesArea');
+    const messageInput = document.getElementById('messageInput');
+    const sendBtn = document.getElementById('sendBtn');
+
+    function scrollToBottom() {
+        messagesArea.scrollTop = messagesArea.scrollHeight;
+    }
+
+    function addMessage(message, role) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${role}`;
+        
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'message-content';
+        contentDiv.textContent = message;
+        
+        messageDiv.appendChild(contentDiv);
+        messagesArea.appendChild(messageDiv);
+        
+        scrollToBottom();
+    }
+
+    function showLoadingIndicator() {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message bot';
+        messageDiv.id = 'loading-indicator';
+        
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'typing-indicator';
+        contentDiv.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+        
+        messageDiv.appendChild(contentDiv);
+        messagesArea.appendChild(messageDiv);
+        
+        scrollToBottom();
+    }
+
+    function removeLoadingIndicator() {
+        const loader = document.getElementById('loading-indicator');
+        if (loader) {
+            loader.remove();
+        }
+    }
+
+    function sendQuickMessage(message) {
+        messageInput.value = message;
+        sendMessage();
+    }
+
+    function handleKeyPress(event) {
+        if (event.key === 'Enter' && !event.shiftKey) {
+            event.preventDefault();
+            sendMessage();
+        }
+    }
+
+    async function sendMessage() {
+        const message = messageInput.value.trim();
+        
+        if (!message) return;
+
+        // Add user message to chat
+        addMessage(message, 'user');
+        messageInput.value = '';
+        messageInput.focus();
+
+        // Remove greeting section if exists
+        const greeting = messagesArea.querySelector('.greeting-section');
+        if (greeting) {
+            greeting.remove();
+        }
+
+        // Show loading indicator
+        showLoadingIndicator();
+        sendBtn.disabled = true;
+        sendBtn.classList.add('disabled');
+
+        try {
+            const response = await fetch('{% url "chat_api" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({ message: message })
+            });
+
+            const data = await response.json();
+            
+            removeLoadingIndicator();
+
+            if (data.success) {
+                addMessage(data.bot_response, 'bot');
+            } else {
+                addMessage('Sorry, I couldn\'t process your request. Please try again.', 'bot');
+            }
+        } catch (error) {
+            removeLoadingIndicator();
+            addMessage('Sorry, there was an error. Please try again.', 'bot');
+            console.error('Error:', error);
+        } finally {
+            sendBtn.disabled = false;
+            sendBtn.classList.remove('disabled');
+        }
+    }
+
+    // Focus on input on load
+    window.addEventListener('load', function() {
+        messageInput.focus();
+    });
+</script>
+{% endblock %}
